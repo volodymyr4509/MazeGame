@@ -2,7 +2,6 @@ package com.springapp.mvc;
 
 import javax.persistence.*;
 
-@Entity(name = "account")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +15,10 @@ public class User {
 
     @Basic
     private String email;
+
+    @Basic
+    private String nickName;
+
 
     public Long getId() {
         return id;
@@ -48,4 +51,9 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getNickName() {return nickName; }
+
+    public void setNickName(String nickName) {this.nickName = nickName; }
+
 }
