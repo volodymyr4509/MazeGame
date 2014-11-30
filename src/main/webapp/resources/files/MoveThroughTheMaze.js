@@ -103,27 +103,8 @@ function createTimer(seconds) {
         clockContext.closePath();
         clockContext.fillStyle = "white";
         clockContext.fill();
-//        if (seconds === 0) {
-//            clearInterval(intervalVar);
-//            window.removeEventListener("keydown", moveRect, true);
-//            makeWhite(0, 0, canvas.width, canvas.height);
-//            context.font = "40px Arial";
-//            context.fillStyle = "red";
-//            context.textAlign = "center";
-//            context.textBaseline = "middle";
-//            context.fillText("Time's up!", canvas.width / 2, canvas.height / 2);
-//            return;
-//        }
         clockContext.font = "20px Arial";
-//        if (seconds <= 10 && seconds > 5) {
-//            context.fillStyle = "orangered";
-//        }
-//        else if (seconds <= 5) {
-//            context.fillStyle = "red";
-//        }
-//        else {
         clockContext.fillStyle = "green";
-//        }
         clockContext.textAlign = "center";
         clockContext.textBaseline = "middle";
         var minutes = Math.floor(seconds / 60);
