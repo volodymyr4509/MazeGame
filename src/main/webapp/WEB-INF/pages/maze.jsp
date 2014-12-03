@@ -3,7 +3,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<<<<<<< HEAD
 <head>
     <title>Maze game</title>
 </head>
@@ -27,11 +26,7 @@
         <td>here place for conversations</td>
         <td>Here place for fight log</td>
     </tr>
-
 </table>
-
-
-
 
 <script src="<c:url value="/resources/MoveThroughTheMaze.js" />"></script>
 </body>
