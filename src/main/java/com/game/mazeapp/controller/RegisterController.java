@@ -23,7 +23,8 @@ public class RegisterController {
         Player playerForm = new Player();
         model.put("playerForm", playerForm);
 
-        return "registration";
+
+        return "Registration";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -32,5 +33,6 @@ public class RegisterController {
         System.out.println("password: " + player.getPassword());
         System.out.println("nickname: " + player.getNickName());
         return "registrationSuccess";
+
     }
 }

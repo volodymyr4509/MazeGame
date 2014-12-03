@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+<<<<<<< HEAD
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Registration</title>
 </head>
@@ -39,6 +40,7 @@
       </tr>
     </table>
   </form:form>
+
 </div>
 </body>
 </html>
