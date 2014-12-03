@@ -1,7 +1,6 @@
-
 var canvas = document.getElementById("mazecanvas");
 var context = canvas.getContext("2d");
-var currRectX = 425;
+var currRectX = 100;
 var currRectY = 3;
 var mazeWidth = 556;
 var mazeHeight = 556;
@@ -18,7 +17,7 @@ function drawMazeAndRectangle(rectX, rectY) {
         context.fillStyle = '#00FF00';
         context.fill();
     };
-    mazeImg.src = "maze.gif";
+    mazeImg.src = "/resources/maze.gif";
 }
 function drawRectangle(x, y, style) {
     makeWhite(currRectX, currRectY, 15, 15);
@@ -97,37 +96,24 @@ function canMoveTo(destX, destY) {
 }
 function createTimer(seconds) {
     intervalVar = setInterval(function () {
-        makeWhite(mazeWidth, 0, canvas.width - mazeWidth, canvas.height);
-        if (seconds === 0) {
-            clearInterval(intervalVar);
-            window.removeEventListener("keydown", moveRect, true);
-            makeWhite(0, 0, canvas.width, canvas.height);
-            context.font = "40px Arial";
-            context.fillStyle = "red";
-            context.textAlign = "center";
-            context.textBaseline = "middle";
-            context.fillText("Time's up!", canvas.width / 2, canvas.height / 2);
-            return;
-        }
-        context.font = "20px Arial";
-        if (seconds <= 10 && seconds > 5) {
-            context.fillStyle = "orangered";
-        }
-        else if (seconds <= 5) {
-            context.fillStyle = "red";
-        }
-        else {
-            context.fillStyle = "green";
-        }
-        context.textAlign = "center";
-        context.textBaseline = "middle";
+        var clock = document.getElementById("clock");
+        var clockContext = clock.getContext("2d");
+        clockContext.beginPath();
+        clockContext.rect(0, 0, clock.width, clock.height);
+        clockContext.closePath();
+        clockContext.fillStyle = "white";
+        clockContext.fill();
+        clockContext.font = "20px Arial";
+        clockContext.fillStyle = "green";
+        clockContext.textAlign = "center";
+        clockContext.textBaseline = "middle";
         var minutes = Math.floor(seconds / 60);
         var secondsToShow = (seconds - minutes * 60).toString();
         if (secondsToShow.length === 1) {
             secondsToShow = "0" + secondsToShow; // if the number of seconds is '5' for example, make sure that it is shown as '05'
         }
-        context.fillText(minutes.toString() + ":" + secondsToShow, mazeWidth + 30, canvas.height / 2);
-        seconds--;
+        clockContext.fillText(minutes.toString() + ":" + secondsToShow, clock.width / 2, clock.height / 2, clock.width);
+        seconds++;
     }, 1000);
 }
 function makeWhite(x, y, w, h) {
@@ -137,6 +123,6 @@ function makeWhite(x, y, w, h) {
     context.fillStyle = "white";
     context.fill();
 }
-drawMazeAndRectangle(530, 122);
+drawMazeAndRectangle(420, 10);
 window.addEventListener("keydown", moveRect, true);
-createTimer(120); // 2 minutes
+createTimer(0); // 2 minutes

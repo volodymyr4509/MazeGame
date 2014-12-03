@@ -22,6 +22,9 @@ public class Player {
     private String nickName;
 
     @Basic
+    private String password;
+
+    @Basic
     private String email;
 
     @Basic
@@ -43,13 +46,15 @@ public class Player {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName() { return lastName; }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getPassword() {return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public String getNickName() {
         return nickName;

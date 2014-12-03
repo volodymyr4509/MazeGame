@@ -4,19 +4,34 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>HTML5 maze game</title>
-
-    <script src="MoveThroughTheMaze.js" type="text/javascript"></script>
+    <title>Maze game</title>
 </head>
 <body>
-<h2>HTML5 Maze Game</h2>
+<h2>Welcome to Maze Game</h2> <br>
+<table border="1" style="width:100%">
+    <tr>
+        <td>
+            <canvas width="60" height="30" id="clock">Can't load the maze game, because your browser doesn't support HTML5.</canvas>
+            <br>
+            <canvas width="616" height="556" id="mazecanvas">Just use chrome!</canvas>
+        </td>
 
-<p>
-    Welcome!<br />
-    This is a HTML5 Maze Game .
-</p>
-<canvas width="616" height="556" id="mazecanvas">Can't load the maze game, because your browser doesn't support HTML5.</canvas>
-<noscript>JavaScript is not enabled. To play the game, you should enable it.</noscript>
+        <td>
+            Hero avatar
+        </td>
+        <td>fight options</td>
+        <td>monster avatar</td>
+    </tr>
+    <tr>
+        <td>here place for conversations</td>
+        <td>Here place for fight log</td>
+    </tr>
 
+</table>
+
+
+
+
+<script src="<c:url value="/resources/MoveThroughTheMaze.js" />"></script>
 </body>
 </html>
