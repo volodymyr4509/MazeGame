@@ -12,7 +12,8 @@
   <title>Home page</title>
 </head>
 <body>
-
-
+    <a href="registration">Registration</a>
+    <a href="login">Log in</a>
+    <a href="maze">Maze</a>
 </body>
 </html>

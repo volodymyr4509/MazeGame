@@ -9,16 +9,20 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 //As I decided all hibernate we will manage all entity/session/transaction by hands. At least at the beginning.
 public class HibernateHelper {
-    private static SessionFactory sessionFactory = buildSessionFactory();
-    private static SessionFactory buildSessionFactory(){
+    private static SessionFactory sessionFactory = null;
+    private static void buildSessionFactory(){
         try{
-            return new AnnotationConfiguration().configure().buildSessionFactory();
+                sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         }catch (Exception e) {
-            System.out.println("Initial session factory creation failed " + e);
+            System.out.println("Initial session factory creation failed ");
+            System.out.println(e);
             throw new ExceptionInInitializerError(e);
         }
     }
     public static SessionFactory getSessionFactory(){
+        if(sessionFactory == null){
+            buildSessionFactory();
+        }
         return sessionFactory;
     }
 

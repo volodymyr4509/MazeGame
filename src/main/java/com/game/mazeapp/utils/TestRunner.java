@@ -16,6 +16,7 @@ public class TestRunner {
         player1.setHealth(100);
         player1.setLastName("sdafasfasfasf");
         player1.setNickName("nickname");
+        player1.setPassword("daslkklagsd");
         Session session =  hibernateHelper.getSessionFactory().openSession();
         Transaction transaction = null;
         try{
@@ -23,6 +24,8 @@ public class TestRunner {
             session.save(player1);
             transaction.commit();
         }catch (Exception e){
+            System.out.println(e);
+            e.printStackTrace();
             transaction.rollback();
         }
         hibernateHelper.shutdown();
