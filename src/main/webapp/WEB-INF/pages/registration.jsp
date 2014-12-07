@@ -40,6 +40,8 @@
     </table>
   </form:form>
 
+    <a href="login">Log in</a>
+
 </div>
 </body>
 </html>

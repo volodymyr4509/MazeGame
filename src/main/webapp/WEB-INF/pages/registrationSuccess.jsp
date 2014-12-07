@@ -37,6 +37,9 @@
       <td>${playerForm.nickName}</td>
     </tr>
   </table>
+
+    <a href="login">Log in</a>
+
 </div>
 </body>
 </html>
