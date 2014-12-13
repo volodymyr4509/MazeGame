@@ -22,28 +22,28 @@
 </script>
 <c:if test="${pageContext.request.userPrincipal.name != null}">
     <h4>
-        Welcome to maze : ${pageContext.request.userPrincipal.name} | <a
-            href="javascript:formSubmit()"> Logout</a>
+        Welcome to maze : ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()"> Logout</a>
     </h4>
 </c:if>
 <br>
+
 <!-- game table -->
 <table border="1" style="width:100%">
     <tr>
         <!-- maze -->
-        <td>
+        <td width="40%">
             <canvas width="60" height="30" id="clock">Can't load the maze game, because your browser doesn't support HTML5.</canvas>
             <br>
             <canvas width="616" height="556" id="mazecanvas">Just use chrome!</canvas>
         </td>
         <!-- Hero -->
-        <td>
+        <td width="25%">
             Hero avatar
         </td>
         <!-- fight parameters -->
-        <td>fight options</td>
+        <td width="10%">fight options</td>
         <!-- Monster -->
-        <td>monster avatar</td>
+        <td width="25%">monster avatar</td>
     </tr>
     <tr>
         <td>here place for conversations</td>

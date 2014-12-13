@@ -11,6 +11,12 @@
 </head>
 <body>
 <div align="center">
+    ${pageContext.request.userPrincipal.name} <br>
+    <a href="register">Registration</a>
+    <a href="login">Log in</a>
+    <a href="maze">Maze</a>
+</div>
+<div align="center">
   <table border="0">
     <tr>
       <td colspan="2" align="center"><h2>Registration Succeeded!</h2></td>
@@ -21,14 +27,6 @@
       </td>
     </tr>
     <tr>
-      <td>Player first name:</td>
-      <td>${playerForm.firstName}</td>
-    </tr>
-    <tr>
-      <td>Player last name:</td>
-      <td>${playerForm.lastName}</td>
-    </tr>
-    <tr>
       <td>E-mail:</td>
       <td>${playerForm.email}</td>
     </tr>
@@ -37,8 +35,6 @@
       <td>${playerForm.nickName}</td>
     </tr>
   </table>
-
-    <a href="login">Log in</a>
 
 </div>
 </body>

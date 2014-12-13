@@ -12,10 +12,14 @@
   <title>Home page</title>
 </head>
 <body>
-    <a href="register">Registration</a>
-    <a href="login">Log in</a>
-    <a href="maze">Maze</a>
 
+
+    <div align="center">
+        ${pageContext.request.userPrincipal.name} <br>
+        <a href="register">Registration</a>
+        <a href="login">Log in</a>
+        <a href="maze">Maze</a>
+    </div>
 
 </body>
 </html>

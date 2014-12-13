@@ -21,16 +21,30 @@
         <csrf/>
     </http>
 
-    <authentication-manager>
+    <!--authentication-manager>
         <authentication-provider>
             <user-service>
                 <user name="mkyong" password="123456" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
-    </authentication-manager>
+    </authentication-manager-->
 
     <!--authentication-manager>
         <authentication-provider ref="customAuthenticationProvider"/>
     </authentication-manager-->
+
+
+
+    <!--beans:bean
+            id="encoder"
+            class="org.springframework.security.crypto.password.StandardPasswordEncoder" /-->
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="customAuthenticationProvider">
+            <!--password-encoder ref="encoder" hash="sha-256" /-->
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean class="com.game.mazeapp.CustomAuthenticationProvider" id="customAuthenticationProvider"/>
 
 </beans:beans>

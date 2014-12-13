@@ -8,19 +8,17 @@
   <title>Registration</title>
 </head>
 <body>
+
+<div align="center">
+    ${pageContext.request.userPrincipal.name} <br>
+    <a href="login">Log in</a>
+    <a href="maze">Maze</a>
+</div>
 <div align="center">
   <form:form action="register" method="post" commandName="playerForm">
     <table border="0">
       <tr>
         <td colspan="2" align="center"><h2>Spring MVC Form Demo - Registration</h2></td>
-      </tr>
-      <tr>
-        <td>First name:</td>
-        <td><form:input path="firstName" /></td>
-      </tr>
-      <tr>
-        <td>Last name:</td>
-        <td><form:input path="lastName" /></td>
       </tr>
       <tr>
         <td>Nick name:</td>
@@ -40,7 +38,6 @@
     </table>
   </form:form>
 
-    <a href="login">Log in</a>
 
 </div>
 </body>

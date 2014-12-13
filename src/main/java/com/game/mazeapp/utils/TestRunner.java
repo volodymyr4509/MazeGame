@@ -12,9 +12,7 @@ public class TestRunner {
         HibernateHelper hibernateHelper = new HibernateHelper();
         Player player1 = new Player();
         player1.setEmail("slsadf");
-        player1.setFirstName("firstnAME");
         player1.setHealth(100);
-        player1.setLastName("sdafasfasfasf");
         player1.setNickName("nickname");
         player1.setPassword("daslkklagsd");
         Session session =  hibernateHelper.getSessionFactory().openSession();
