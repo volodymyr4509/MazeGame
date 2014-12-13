@@ -19,28 +19,28 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
-    public ModelAndView welcomePage() {
-
-        ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Custom Login Form");
-        model.addObject("message", "This is welcome page!");
-        model.setViewName("home");
-        return model;
-
-    }
-
-    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage() {
-
-        ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Custom Login Form");
-        model.addObject("message", "This is protected page!");
-        model.setViewName("admin");
-
-        return model;
-
-    }
+//    @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
+//    public ModelAndView welcomePage() {
+//
+//        ModelAndView model = new ModelAndView();
+//        model.addObject("title", "Spring Security Custom Login Form");
+//        model.addObject("message", "This is welcome page!");
+//        model.setViewName("home");
+//        return model;
+//
+//    }
+//
+//    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+//    public ModelAndView adminPage() {
+//
+//        ModelAndView model = new ModelAndView();
+//        model.addObject("title", "Spring Security Custom Login Form");
+//        model.addObject("message", "This is protected page!");
+//        model.setViewName("admin");
+//
+//        return model;
+//
+//    }
 
     //Spring Security see this :
     @RequestMapping(value = "/login", method = RequestMethod.GET)

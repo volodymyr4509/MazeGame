@@ -5,15 +5,18 @@ import javax.persistence.*;
 /**
  * Created by Acer on 11/20/2014.
  */
-;
+
 @Entity
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
     @Basic
+    @Column(unique = true)
     private String nickName;
+
 
     @Basic
     private String password;
@@ -21,8 +24,8 @@ public class Player {
     @Basic
     private String email;
 
-    @Basic
-    private int health;
+    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
+    private PlayerSpecifications playerSpecification;
 
     public Long getId() {
         return id;
@@ -30,6 +33,14 @@ public class Player {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public PlayerSpecifications getPlayerSpecification() {
+        return playerSpecification;
+    }
+
+    public void setPlayerSpecification(PlayerSpecifications playerSpecification) {
+        this.playerSpecification = playerSpecification;
     }
 
     public String getPassword() {return password; }
@@ -52,11 +63,4 @@ public class Player {
         this.email = email;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
 }

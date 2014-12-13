@@ -7,25 +7,32 @@
     <title>Maze game</title>
 </head>
 <body>
-<!-- logout feature -->
-<c:url value="/j_spring_security_logout" var="logoutUrl" />
-<!-- csrt for log out-->
-<form action="${logoutUrl}" method="post" id="logoutForm">
-    <input type="hidden"
-           name="${_csrf.parameterName}"
-           value="${_csrf.token}" />
-</form>
-<script>
-    function formSubmit() {
-        document.getElementById("logoutForm").submit();
-    }
-</script>
-<c:if test="${pageContext.request.userPrincipal.name != null}">
-    <h4>
-        Welcome to maze : ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()"> Logout</a>
-    </h4>
-</c:if>
-<br>
+
+<div align="center">
+        <!-- begin logout feature -->
+        <c:url value="/j_spring_security_logout" var="logoutUrl" />
+        <!-- csrt for log out-->
+        <form action="${logoutUrl}" method="post" id="logoutForm">
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}" />
+        </form>
+        <script>
+            function formSubmit() {
+                document.getElementById("logoutForm").submit();
+            }
+        </script>
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <h4>
+                Welcome to maze : ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()"> Logout</a>
+            </h4>
+        </c:if>
+        <br>
+        <!-- end logout feature -->
+
+        <a href="profile">Player Profile</a>
+</div>
+
 
 <!-- game table -->
 <table border="1" style="width:100%">
@@ -38,7 +45,9 @@
         </td>
         <!-- Hero -->
         <td width="25%">
-            Hero avatar
+            <sec:authorize ifAnyGranted='ROLE_USER'>
+                <%@ include file="profile.jsp"%>
+            </sec:authorize>
         </td>
         <!-- fight parameters -->
         <td width="10%">fight options</td>
