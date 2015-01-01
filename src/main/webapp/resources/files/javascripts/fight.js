@@ -19,9 +19,9 @@ $( document ).ready(function() {
 
     function postKick() {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/kick",
-            data: $("#fightOptionID").serialize(),
+            data: $("#fightOptionID").serialize().xhr(),
             success: function (response) {
                 // we have the response
                 console.log("Response : " + response);

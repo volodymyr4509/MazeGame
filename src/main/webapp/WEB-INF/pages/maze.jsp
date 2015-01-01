@@ -41,23 +41,23 @@
 <!-- game table -->
 <table border="1" style="width:100%">
     <tr>
-        <!-- maze -->
-        <td width="40%">
-            <canvas width="60" height="30" id="clock">Can't load the maze game, because your browser doesn't support HTML5.</canvas>
-            <br>
-            <canvas width="616" height="556" id="mazecanvas">Just use chrome!</canvas>
-        </td>
-        <!-- Hero -->
-        <td width="25%">
-            <sec:authorize ifAnyGranted='ROLE_USER'>
-                <%@ include file="profile.jsp"%>
-            </sec:authorize>
-        </td>
-        <!-- fight parameters -->
-        <td width="10%"><%@include file="fightForm.jsp"%></td>
-        <!-- Monster -->
-        <td width="25%"><%@include file="monster.jsp"%></td>
-    </tr>
+    <!-- maze -->
+    <td width="40%">
+        <canvas width="60" height="30" id="clock">Can't load the maze game, because your browser doesn't support HTML5.</canvas>
+        <br>
+        <canvas width="616" height="556" id="mazecanvas">Just use chrome!</canvas>
+    </td>
+    <!-- Hero -->
+    <td width="25%">
+        <sec:authorize ifAnyGranted='ROLE_USER'>
+            <%@ include file="profile.jsp"%>
+        </sec:authorize>
+    </td>
+    <!-- fight parameters -->
+    <td width="10%"><%@include file="fightForm.jsp"%></td>
+    <!-- Monster -->
+    <td width="25%"><%@include file="monster.jsp"%></td>
+</tr>
     <tr>
         <td>here place for conversations</td>
         <td>Here place for fight log</td>

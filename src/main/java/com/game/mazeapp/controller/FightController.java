@@ -21,7 +21,7 @@ public class FightController {
         return "fightForm";
     }
 
-    @RequestMapping(value = "/kick", method = RequestMethod.GET)
+    @RequestMapping(value = "/kick", method = RequestMethod.POST)
     public @ResponseBody String kick(@ModelAttribute(value = "kickInfo")String kick, BindingResult bindingResult){
         System.out.println("Binding result : " + bindingResult);
         System.out.println("kick : "+kick);

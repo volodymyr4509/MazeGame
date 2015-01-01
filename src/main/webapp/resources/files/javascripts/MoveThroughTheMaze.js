@@ -21,7 +21,7 @@ $( document ).ready(function() {
         colour:"#FF0000",
         draw:draw,
         move:move,
-        currentDirection:0,
+        currentDirection:2,
         backDirection:0,
         possibleDirections:findPossibleDirections
     }
