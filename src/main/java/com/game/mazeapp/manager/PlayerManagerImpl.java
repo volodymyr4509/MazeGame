@@ -2,11 +2,10 @@ package com.game.mazeapp.manager;
 
 import com.game.mazeapp.dao.PlayerDaoImpl;
 import com.game.mazeapp.entity.Player;
-import com.game.mazeapp.entity.PlayerSpecifications;
+import com.game.mazeapp.entity.PlayerDetails;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Home on 06.12.2014.
@@ -25,9 +24,9 @@ public class PlayerManagerImpl {
     public Map<String, Integer> findPlayerSpecificationsByNickName(String nickName){
         Map<String, Integer> playerSpecificationsMap = new LinkedHashMap<String, Integer>();
         Player player = findPlayerByNickName(nickName);
-        PlayerSpecifications playerSpecifications = player.getPlayerSpecification();
-        playerSpecificationsMap.put("health", playerSpecifications.getHealth());
-        playerSpecificationsMap.put("muscle", playerSpecifications.getMuscle());
+        PlayerDetails playerDetails = player.getPlayerDetails();
+        playerSpecificationsMap.put("health", playerDetails.getHealth());
+        playerSpecificationsMap.put("muscle", playerDetails.getMuscle());
         return playerSpecificationsMap;
     }
 

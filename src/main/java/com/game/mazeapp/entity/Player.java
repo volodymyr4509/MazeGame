@@ -12,20 +12,18 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "playerDetailsfk")
+    private PlayerDetails playerDetails;
 
-    @Basic
-    @Column(unique = true)
+    @Column(length = 20 ,unique = true)
     private String nickName;
 
-
-    @Basic
+    @Column(length = 50)
     private String password;
 
-    @Basic
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
-
-    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
-    private PlayerSpecifications playerSpecification;
 
     public Long getId() {
         return id;
@@ -35,17 +33,13 @@ public class Player {
         this.id = id;
     }
 
-    public PlayerSpecifications getPlayerSpecification() {
-        return playerSpecification;
+    public PlayerDetails getPlayerDetails() {
+        return playerDetails;
     }
 
-    public void setPlayerSpecification(PlayerSpecifications playerSpecification) {
-        this.playerSpecification = playerSpecification;
+    public void setPlayerDetails(PlayerDetails playerDetails) {
+        this.playerDetails = playerDetails;
     }
-
-    public String getPassword() {return password; }
-
-    public void setPassword(String password) { this.password = password; }
 
     public String getNickName() {
         return nickName;
@@ -55,6 +49,14 @@ public class Player {
         this.nickName = nickName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -62,5 +64,4 @@ public class Player {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

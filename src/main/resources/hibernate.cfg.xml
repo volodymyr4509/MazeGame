@@ -13,7 +13,9 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
         <mapping class="com.game.mazeapp.entity.Player"></mapping>
-        <mapping class="com.game.mazeapp.entity.PlayerSpecifications"></mapping>
+        <mapping class="com.game.mazeapp.entity.PlayerDetails"></mapping>
+        <mapping class="com.game.mazeapp.entity.PlayerDetailsVersion"></mapping>
+
 
     </session-factory>
 </hibernate-configuration>

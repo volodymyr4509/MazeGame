@@ -2,28 +2,30 @@ package com.game.mazeapp.entity;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Home on 13.12.2014.
  */
 
 @Entity
-public class PlayerSpecifications {
+public class PlayerDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    //delete mappedBy to allow bidirectional relations
+    @OneToOne(mappedBy = "playerDetails")
     public Player player;
 
-    @Basic
-    @Column(columnDefinition = "int default 100")
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "playerDetails")
+    public Set<PlayerDetailsVersion> playerDetailsVersions;
+
+    @Column
     private int health;
 
-    @Basic
-    @Column(columnDefinition = "int default 100")
+    @Column
     private int muscle;
 
     public Long getId() {

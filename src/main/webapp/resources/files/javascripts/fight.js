@@ -21,7 +21,7 @@ $( document ).ready(function() {
         $.ajax({
             type: "POST",
             url: "/kick",
-            data: $("#fightOptionID").serialize().xhr(),
+            data: $("#fightOptionID").serialize(),
             success: function (response) {
                 // we have the response
                 console.log("Response : " + response);
