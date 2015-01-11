@@ -13,8 +13,12 @@ public class Player {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "playerDetailsfk")
+    @JoinColumn(name = "playerDetails_id")
     private PlayerDetails playerDetails;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "currentPlayerState_id")
+    private CurrentPlayerState currentPlayerState;
 
     @Column(length = 20 ,unique = true)
     private String nickName;
@@ -63,5 +67,13 @@ public class Player {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public CurrentPlayerState getCurrentPlayerState() {
+        return currentPlayerState;
+    }
+
+    public void setCurrentPlayerState(CurrentPlayerState currentPlayerState) {
+        this.currentPlayerState = currentPlayerState;
     }
 }

@@ -15,6 +15,10 @@
         <mapping class="com.game.mazeapp.entity.Player"></mapping>
         <mapping class="com.game.mazeapp.entity.PlayerDetails"></mapping>
         <mapping class="com.game.mazeapp.entity.PlayerDetailsVersion"></mapping>
+        <mapping class="com.game.mazeapp.entity.CurrentPlayerState"></mapping>
+        <mapping class="com.game.mazeapp.entity.CurrentPlayerStateVersion"></mapping>
+        <mapping class="com.game.mazeapp.entity.Fight"></mapping>
+        <mapping class="com.game.mazeapp.entity.Kick"></mapping>
 
 
     </session-factory>

@@ -16,11 +16,8 @@ public class PlayerDetails {
     private Long id;
 
     //delete mappedBy to allow bidirectional relations
-    @OneToOne(mappedBy = "playerDetails")
+    @OneToOne(mappedBy = "playerDetails", cascade = CascadeType.ALL)
     public Player player;
-
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "playerDetails")
-    public Set<PlayerDetailsVersion> playerDetailsVersions;
 
     @Column
     private int health;

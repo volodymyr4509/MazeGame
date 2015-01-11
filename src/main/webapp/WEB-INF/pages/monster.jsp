@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<img id="monsterAvatarID" src="/resources/darkplace.jpg" />
+<img id="monsterAvatarID" src="/resources/kazan.svg" />
 
 <hr>
 <!-- Monster info-->

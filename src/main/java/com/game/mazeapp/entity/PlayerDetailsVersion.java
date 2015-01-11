@@ -13,8 +13,8 @@ public class PlayerDetailsVersion {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "PlayerDetailsID")
+    @ManyToOne
+    @JoinColumn(name = "playerDetails_id")
     private PlayerDetails playerDetails;
 
     @Column
@@ -34,17 +34,16 @@ public class PlayerDetailsVersion {
     public int getHealthVersion() {
         return healthVersion;
     }
-
-    public void setHealthVersion() {
-        this.healthVersion = playerDetails.getHealth();
+    public void setHealthVersion(int healthVersion) {
+        this.healthVersion = healthVersion;
     }
 
     public int getMuscleVersion() {
         return muscleVersion;
     }
 
-    public void setMuscleVersion() {
-        this.muscleVersion = playerDetails.getMuscle();
+    public void setMuscleVersion(int muscleVersion) {
+        this.muscleVersion = muscleVersion;
     }
 
     public PlayerDetails getPlayerDetails() {
