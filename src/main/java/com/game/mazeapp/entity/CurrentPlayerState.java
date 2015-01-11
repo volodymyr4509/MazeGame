@@ -28,7 +28,8 @@ public class CurrentPlayerState {
     @Column
     private int currentPlayerMuscle;
 
-    @OneToOne(mappedBy = "currentPlayerState")
+    @ManyToOne
+    @JoinColumn(name = "kick_id")
     private Kick kick;
 
     public Long getId() {

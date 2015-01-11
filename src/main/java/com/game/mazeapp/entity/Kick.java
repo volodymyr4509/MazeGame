@@ -1,6 +1,7 @@
 package com.game.mazeapp.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Home on 03.01.2015.
@@ -13,9 +14,8 @@ public class Kick {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "firstPlayerState_id")
-    private CurrentPlayerState firstPlayer;
+    @OneToMany (mappedBy = "kick")
+    private List<CurrentPlayerState> playerStateList;
 
     @Column
     private Integer firstPlayerBlockOn;
@@ -25,10 +25,6 @@ public class Kick {
 
     @Column
     private Integer firstPlayerDamage;
-
-    @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "secondPlayerState_id")
-    private CurrentPlayerState secondPlayer;
 
     @Column
     private Integer secondPlayerBlockOn;
@@ -47,12 +43,12 @@ public class Kick {
         this.id = id;
     }
 
-    public CurrentPlayerState getFirstPlayer() {
-        return firstPlayer;
+    public List<CurrentPlayerState> getPlayerStateList() {
+        return playerStateList;
     }
 
-    public void setFirstPlayer(CurrentPlayerState firstPlayer) {
-        this.firstPlayer = firstPlayer;
+    public void setPlayerStateList(List<CurrentPlayerState> playerStateList) {
+        this.playerStateList = playerStateList;
     }
 
     public Integer getFirstPlayerBlockOn() {
@@ -77,14 +73,6 @@ public class Kick {
 
     public void setFirstPlayerDamage(Integer firstPlayerDamage) {
         this.firstPlayerDamage = firstPlayerDamage;
-    }
-
-    public CurrentPlayerState getSecondPlayer() {
-        return secondPlayer;
-    }
-
-    public void setSecondPlayer(CurrentPlayerState secondPlayer) {
-        this.secondPlayer = secondPlayer;
     }
 
     public Integer getSecondPlayerBlockOn() {

@@ -265,7 +265,7 @@ $( document ).ready(function() {
         console.log("begin fight");
         $.event.trigger({
             type: "fight",
-            message: "rahul"
+            message: "vovk"
         });
     }
 

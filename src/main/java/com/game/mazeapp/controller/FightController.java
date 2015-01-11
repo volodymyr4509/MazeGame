@@ -1,11 +1,9 @@
 package com.game.mazeapp.controller;
 
+import com.game.mazeapp.manager.FightManagerImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -15,16 +13,25 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FightController {
 
-    @RequestMapping("/beginfight")
-    public String beginFight(){
-
-        return "fightForm";
+    @RequestMapping(value = "/createNewFight", method = RequestMethod.POST)
+    public @ResponseBody String createFight(@RequestParam String nicknames){
+        System.out.println("begin create fight");
+        //split string nicknames by regex " "
+        String [] nicknamesArray = nicknames.split(" ", 10);
+        FightManagerImpl fightManager = new FightManagerImpl();
+        try{
+            fightManager.createFight(nicknamesArray);
+        }catch (Exception e){
+            //add response parameters - 500 or something like this
+            return e.toString();
+        }
+    return "Saved successfully";
     }
 
     @RequestMapping(value = "/kick", method = RequestMethod.POST)
-    public @ResponseBody String kick(@ModelAttribute(value = "kickInfo")String kick, BindingResult bindingResult){
+    public @ResponseBody String kick(@ModelAttribute(value = "kickInfo")String kickInfo, BindingResult bindingResult){
         System.out.println("Binding result : " + bindingResult);
-        System.out.println("kick : "+kick);
+        System.out.println("kick : "+kickInfo);
     return "hello kick";
     }
 
