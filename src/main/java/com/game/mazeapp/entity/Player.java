@@ -28,7 +28,7 @@ public class Player {
     @Column(length = 50)
     private String password;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false)
     private String email;
 
     public Player() {

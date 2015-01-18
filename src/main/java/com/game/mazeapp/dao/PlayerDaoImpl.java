@@ -38,7 +38,7 @@ public class PlayerDaoImpl {
         Player player = null;
         try {
             player = (Player)session.createQuery("FROM Player WHERE nickName like :userNickName").setParameter("userNickName",nickName).uniqueResult();
-            System.out.println("-----findPlayerByNickName: Player's nickName: " + player.getNickName());
+            System.out.println("-----findPlayerByNickName: Player's nickName: " + nickName);
         }finally {
             session.close();
         }

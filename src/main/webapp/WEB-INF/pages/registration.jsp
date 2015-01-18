@@ -37,7 +37,9 @@
       </tr>
     </table>
   </form:form>
-
+  <c:if test="${not empty ValidationError}">
+    <div class="error">${ValidationError}</div>
+  </c:if>
 
 </div>
 </body>

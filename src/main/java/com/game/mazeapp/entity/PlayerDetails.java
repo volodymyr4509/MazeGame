@@ -86,7 +86,6 @@ public class PlayerDetails {
     public String toString() {
         return "PlayerDetails{" +
                 "id=" + id +
-                ", player=" + player +
                 ", health=" + health +
                 ", muscle=" + muscle +
                 '}';

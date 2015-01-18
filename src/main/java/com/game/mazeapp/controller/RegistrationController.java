@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/register")
-public class RegisterController {
+public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String viewRegistration(Map<String,Object> model){
@@ -27,8 +27,13 @@ public class RegisterController {
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@ModelAttribute("playerForm") Player player, Map<String,Object> model){
         PlayerManagerImpl playerManager = new PlayerManagerImpl();
-        boolean status = playerManager.writePlayerToDatabase(player);
-        if (status ){
+        boolean status = false;
+        try {
+            status = playerManager.writePlayerToDatabase(player);
+        }catch (IllegalArgumentException e){
+            model.put("ValidationError",e.toString());
+        }
+        if (status){
             return "registrationSuccess";
         }else
             return "registration";

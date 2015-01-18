@@ -136,7 +136,6 @@ public class CurrentPlayerState {
     public String toString() {
         return "CurrentPlayerState{" +
                 "id=" + id +
-                ", player=" + player +
                 ", x=" + x +
                 ", y=" + y +
                 ", currentPlayerHealth=" + currentPlayerHealth +
