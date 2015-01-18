@@ -18,7 +18,7 @@ public class PlayerDaoImpl {
             transaction = session.beginTransaction();
             session.save(player);
             transaction.commit();
-            System.out.println("Player with nickName '"+player.getNickName() +"' saved successfully");
+            System.out.println("Player saved successfully: "+ player);
             status = true;
         }catch (Exception e){
             System.out.println("Player saving process rollback....");

@@ -29,6 +29,9 @@ public class CurrentPlayerStateVersion {
     @Column
     private int currentPlayerMuscle;
 
+    public CurrentPlayerStateVersion() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -75,5 +78,43 @@ public class CurrentPlayerStateVersion {
 
     public void setCurrentPlayerMuscle(int currentPlayerMuscle) {
         this.currentPlayerMuscle = currentPlayerMuscle;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CurrentPlayerStateVersion that = (CurrentPlayerStateVersion) o;
+
+        if (currentPlayerHealth != that.currentPlayerHealth) return false;
+        if (currentPlayerMuscle != that.currentPlayerMuscle) return false;
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+        if (!currentPlayerState.equals(that.currentPlayerState)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = currentPlayerState.hashCode();
+        result = 31 * result + x;
+        result = 31 * result + y;
+        result = 31 * result + currentPlayerHealth;
+        result = 31 * result + currentPlayerMuscle;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentPlayerStateVersion{" +
+                "id=" + id +
+                ", currentPlayerState=" + currentPlayerState +
+                ", x=" + x +
+                ", y=" + y +
+                ", currentPlayerHealth=" + currentPlayerHealth +
+                ", currentPlayerMuscle=" + currentPlayerMuscle +
+                '}';
     }
 }

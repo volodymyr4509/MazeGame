@@ -28,9 +28,23 @@ public class CurrentPlayerState {
     @Column
     private int currentPlayerMuscle;
 
+    @Column
+    private boolean inFight;
+
     @ManyToOne
     @JoinColumn(name = "kick_id")
     private Kick kick;
+
+    public CurrentPlayerState() {
+    }
+
+    public boolean isInFight() {
+        return inFight;
+    }
+
+    public void setInFight(boolean inFight) {
+        this.inFight = inFight;
+    }
 
     public Long getId() {
         return id;
@@ -86,5 +100,49 @@ public class CurrentPlayerState {
 
     public void setKick(Kick kick) {
         this.kick = kick;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CurrentPlayerState that = (CurrentPlayerState) o;
+
+        if (currentPlayerHealth != that.currentPlayerHealth) return false;
+        if (currentPlayerMuscle != that.currentPlayerMuscle) return false;
+        if (inFight != that.inFight) return false;
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+        if (kick != null ? !kick.equals(that.kick) : that.kick != null) return false;
+        if (!player.equals(that.player)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = player.hashCode();
+        result = 31 * result + x;
+        result = 31 * result + y;
+        result = 31 * result + currentPlayerHealth;
+        result = 31 * result + currentPlayerMuscle;
+        result = 31 * result + (inFight ? 1 : 0);
+        result = 31 * result + (kick != null ? kick.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentPlayerState{" +
+                "id=" + id +
+                ", player=" + player +
+                ", x=" + x +
+                ", y=" + y +
+                ", currentPlayerHealth=" + currentPlayerHealth +
+                ", currentPlayerMuscle=" + currentPlayerMuscle +
+                ", inFight=" + inFight +
+                ", kick=" + kick +
+                '}';
     }
 }

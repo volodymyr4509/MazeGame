@@ -17,6 +17,9 @@ public class Fight {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Player> players;
 
+    public Fight() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,5 +36,28 @@ public class Fight {
         this.players = players;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Fight fight = (Fight) o;
+
+        if (!players.equals(fight.players)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return players.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Fight{" +
+                "id=" + id +
+                ", players=" + players +
+                '}';
+    }
 }

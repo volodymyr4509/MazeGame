@@ -25,6 +25,9 @@ public class PlayerDetails {
     @Column
     private int muscle;
 
+    public PlayerDetails() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -57,4 +60,35 @@ public class PlayerDetails {
         this.muscle = muscle;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PlayerDetails that = (PlayerDetails) o;
+
+        if (health != that.health) return false;
+        if (muscle != that.muscle) return false;
+        if (!player.equals(that.player)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = player.hashCode();
+        result = 31 * result + health;
+        result = 31 * result + muscle;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerDetails{" +
+                "id=" + id +
+                ", player=" + player +
+                ", health=" + health +
+                ", muscle=" + muscle +
+                '}';
+    }
 }

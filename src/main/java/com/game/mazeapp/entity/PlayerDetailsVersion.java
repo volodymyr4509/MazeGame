@@ -23,6 +23,9 @@ public class PlayerDetailsVersion {
     @Column
     private int muscleVersion;
 
+    public PlayerDetailsVersion() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -52,5 +55,37 @@ public class PlayerDetailsVersion {
 
     public void setPlayerDetails(PlayerDetails playerDetails) {
         this.playerDetails = playerDetails;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PlayerDetailsVersion that = (PlayerDetailsVersion) o;
+
+        if (healthVersion != that.healthVersion) return false;
+        if (muscleVersion != that.muscleVersion) return false;
+        if (!playerDetails.equals(that.playerDetails)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = playerDetails.hashCode();
+        result = 31 * result + healthVersion;
+        result = 31 * result + muscleVersion;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerDetailsVersion{" +
+                "id=" + id +
+                ", playerDetails=" + playerDetails +
+                ", healthVersion=" + healthVersion +
+                ", muscleVersion=" + muscleVersion +
+                '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.game.mazeapp.entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 /**
@@ -29,6 +31,9 @@ public class Player {
     @Column(length = 50, nullable = false, unique = true)
     private String email;
 
+    public Player() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -41,6 +46,7 @@ public class Player {
         return playerDetails;
     }
 
+    @Autowired
     public void setPlayerDetails(PlayerDetails playerDetails) {
         this.playerDetails = playerDetails;
     }
@@ -75,5 +81,39 @@ public class Player {
 
     public void setCurrentPlayerState(CurrentPlayerState currentPlayerState) {
         this.currentPlayerState = currentPlayerState;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", playerDetails=" + playerDetails +
+                ", currentPlayerState=" + currentPlayerState +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (!email.equals(player.email)) return false;
+        if (!nickName.equals(player.nickName)) return false;
+        if (!password.equals(player.password)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nickName.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + email.hashCode();
+        return result;
     }
 }

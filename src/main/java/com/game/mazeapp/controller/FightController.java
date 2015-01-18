@@ -21,11 +21,11 @@ public class FightController {
         FightManagerImpl fightManager = new FightManagerImpl();
         try{
             fightManager.createFight(nicknamesArray);
+            return "Saved successfully";
         }catch (Exception e){
             //add response parameters - 500 or something like this
             return e.toString();
         }
-    return "Saved successfully";
     }
 
     @RequestMapping(value = "/kick", method = RequestMethod.POST)
