@@ -11,11 +11,30 @@
        <bean id="playerDetails" class="com.game.mazeapp.entity.PlayerDetails">
               <property name="health" value="20" />
               <property name="muscle" value="15" />
+              <property name="win" value="0"/>
+              <property name="lose" value="0"/>
+       </bean>
+
+       <bean id="batMonsterDetails" class="com.game.mazeapp.entity.PlayerDetails">
+              <property name="health" value="5" />
+              <property name="muscle" value="5" />
        </bean>
 
        <bean id="currentPlayerState" class="com.game.mazeapp.entity.CurrentPlayerState">
               <property name="inFight" value="false"/>
+       </bean>
 
+       <bean id="currentMonsterState" class="com.game.mazeapp.entity.CurrentPlayerState">
+              <property name="inFight" value="true"/>
+       </bean>
+
+       <bean id="bat" class="com.game.mazeapp.entity.Player">
+              <property name="playerDetails" ref="batMonsterDetails"/>
+              <property name="currentPlayerState" ref="currentMonsterState"/>
+              <property name="nickName" value="Bat"/>
+              <!--add password/email for monster to calculate hash-->
+              <property name="password" value="batPassword"/>
+              <property name="email" value="batemail@monsteremail.com"/>
        </bean>
 
 

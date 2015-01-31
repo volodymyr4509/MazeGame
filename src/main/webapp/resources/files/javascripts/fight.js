@@ -20,33 +20,51 @@ $( document ).ready(function() {
     $("input:radio").click(function(){
         console.log("you checked radio buttonID: " + $("input:radio:checked"));
         var checkedRadios = $("input:radio:checked");
+        //if the user select two radios - post a kick and uncheck radios.
         if(checkedRadios.length == 2){
-            postKick();
+            postKick(checkedRadios);
+            setTimeout(function () {
+                checkedRadios.filter("[name=attack]").removeAttr("checked");
+                checkedRadios.filter("[name=block]").removeAttr("checked");
+            }, 500);
+
         }
     });
 
-    function postKick() {
-        $.ajax({
-            type: "POST",
-            url: "/kick",
-            data: $("#fightOptionID").serialize(),
-            success: function (response) {
-                // we have the response
-                console.log("Response : " + response);
-            },
-            error: function (e) {
-                console.log("Kick failed: " + e.toString());
-            }
+    function postKick(checkedRadios) {
+        var kickparam = '{"'+ checkedRadios[0].name + '":' + checkedRadios[0].value + ', "' + checkedRadios[1].name + '":' + checkedRadios[1].value + '}';
+        console.log("data: "+kickparam);
+            $.ajax({
+                type:"POST",
+                url: "/kick",
+                dataType: 'json',
+                data: kickparam,
+                contentType: 'application/json; charset=utf-8',
+                async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+                cache: false,    //This will force requested pages not to be cached by the browser
+                processData:false, //To avoid making query String instead of JSON
+                success: function (response) {
+                    console.log("kick was posted: " + response);
+                },
+                error: function (e) {
+                    console.log('cannt save kick: ' + e);
+                }
         });
     }
 
     function postFight() {
+        var myJson = '{"monsterNickname":"bat"}';
+        console.log("data: "+myJson);
         $.ajax({
-            type: "POST",
-            url: "/createNewFight",
-            data: "vkret, vovk",
+            type:"POST",
+            url: "/beginfight",
+            dataType: 'json',
+            data: myJson,
+            contentType: 'application/json; charset=utf-8',
+            async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            cache: false,    //This will force requested pages not to be cached by the browser
+            processData:false, //To avoid making query String instead of JSON
             success: function (response) {
-                // we have the response
                 console.log("fight was saved: " + response);
             },
             error: function (e) {

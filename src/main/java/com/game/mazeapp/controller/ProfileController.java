@@ -1,10 +1,13 @@
 package com.game.mazeapp.controller;
 
+import com.game.mazeapp.entity.Player;
 import com.game.mazeapp.manager.PlayerManagerImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -25,13 +28,13 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/{playerNickName}", method = RequestMethod.GET)
-    public String showPlayerProfile(@PathVariable(value = "playerNickName") String playerNickName) {
+    @ResponseBody
+    public Player showPlayerProfile(@PathVariable(value = "playerNickName") String playerNickName) {
         PlayerManagerImpl playerManager = new PlayerManagerImpl();
-        Map<String, Integer> playerSpecificationsMap = playerManager.findPlayerSpecificationsByNickName(playerNickName);
+        Player player = playerManager.findPlayerByNickName(playerNickName);
 
-        ModelAndView model = new ModelAndView();
-        model.addAllObjects(playerSpecificationsMap);
+        //serialize player and read by js on profile page.
 
-        return "profile";
+        return player;
     }
 }

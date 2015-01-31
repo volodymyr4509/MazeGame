@@ -6,8 +6,12 @@ import com.game.mazeapp.dao.PlayerDaoImpl;
 import com.game.mazeapp.entity.CurrentPlayerState;
 import com.game.mazeapp.entity.Fight;
 import com.game.mazeapp.entity.Player;
+import com.game.mazeapp.entity.PlayerDetails;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,36 +20,34 @@ import java.util.Set;
  */
 public class FightManagerImpl {
 
-    public void createFight(String [] nicknames) throws Exception{
+    public Fight createFight(String currentPlayerNickname, String opponentNickname) throws Exception{
         PlayerDaoImpl playerDao = new PlayerDaoImpl();
         FightDaoImpl fightDao = new FightDaoImpl();
-        Player attacker = null;
-        Player defender = null;
-        //find players in db
-        if(nicknames.length == 2){
-            attacker = playerDao.findPlayerByNickName(nicknames[0]);
-            defender = playerDao.findPlayerByNickName(nicknames[1]);
-            System.out.println("attaker: " + attacker+ " defender: " + defender);
-        }else throw new IllegalArgumentException("Wrong players' nicknames format or nicknames are too short. Nicknames: " + Arrays.toString(nicknames));
-        if(attacker != null && defender != null){
-            //create fight object
-            Fight fight = new Fight();
-            Set<Player> playerSet = new LinkedHashSet<>();
-            playerSet.add(attacker);
-            playerSet.add(defender);
-            fight.setPlayers(playerSet);
-            //update players' states to "inFight"
-            CurrentPlayerState attackerState = attacker.getCurrentPlayerState();
-            CurrentPlayerState defenderState = defender.getCurrentPlayerState();
-            CurrentPlayerStateDaoImpl currentPlayerStateDao = new CurrentPlayerStateDaoImpl();
-            currentPlayerStateDao.update(attackerState);
-            currentPlayerStateDao.update(defenderState);
-            defender.getCurrentPlayerState().setInFight(true);
-            boolean saved = fightDao.save(fight);
-            if(!saved){
-                throw new Exception("Fight wasn't saved correctly");
-            }
-        }else throw new IllegalArgumentException("There isn't player(s) ---> " + attacker==null?"attackerNickname:"+nicknames[0]:"" + defender==null?"defenderNickname:"+nicknames[1]:"");
+        CurrentPlayerStateDaoImpl currentPlayerStateDao = new CurrentPlayerStateDaoImpl();
+        Set<Player> playerSet = new LinkedHashSet<>();
 
+        Player currentPlayer = playerDao.findPlayerByNickName(currentPlayerNickname);
+        ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContextBeans.xml");
+        //create monster unique nickname;
+        Player opponentPlayer = (Player) applicationContext.getBean(opponentNickname);
+        opponentPlayer.setNickName(opponentNickname + System.currentTimeMillis());
+
+        System.out.println("opponentPlayer: " + opponentPlayer);
+
+        if(currentPlayer != null && opponentPlayer != null){
+            playerSet.add(currentPlayer);
+            playerSet.add(opponentPlayer);
+        }else throw new IllegalArgumentException("Unable to find players with nickName: " + currentPlayerNickname + " - " + opponentNickname);
+        CurrentPlayerState currentPlayerState = currentPlayer.getCurrentPlayerState();
+        currentPlayerState.setInFight(true);
+        currentPlayerStateDao.update(currentPlayerState);
+        Fight fight = new Fight();
+        fight.setPlayers(playerSet);
+        boolean saved = fightDao.save(fight);
+        if(!saved){
+            throw new Exception("For some reason fight wasn't saved correctly");
+        }
+        return fight;
     }
+
 }

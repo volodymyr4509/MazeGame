@@ -36,8 +36,52 @@
 
     <a href="profile">Player Profile</a>
 </div>
+<script>
+    function saveFight(){
+        var myJson = {"monsterNickname":"bat"};
+        $.ajax({
+            type:"POST",
+            url: "/beginfight",
+            dataType: 'json',
+            data: JSON.stringify(myJson),
+            contentType: 'application/json; charset=utf-8',
+            async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            cache: false,    //This will force requested pages not to be cached by the browser
+            processData:false, //To avoid making query String instead of JSON
+            success: function (response) {
+                console.log("fight was saved: " + response);
+            },
+            error: function (e) {
+                console.log('cannt save fight: ' + e);
+            }
+        });
+    }
 
+</script>
+<button type = 'button' onclick='saveFight()'>begin Fight</button>
+<script>
+    function sendkick(){
+        var kickparam = $("#fightOptionID").serialize();
+        $.ajax({
+            type:"POST",
+            url: "/kick",
+            dataType: 'json',
+            data: JSON.stringify(kickparam),
+            contentType: 'application/json; charset=utf-8',
+            async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            cache: false,    //This will force requested pages not to be cached by the browser
+            processData:false, //To avoid making query String instead of JSON
+            success: function (response) {
+                console.log("kick success: " + response);
+            },
+            error: function (e) {
+                console.log('cannt save kick: ' + e);
+            }
+        });
+    }
 
+</script>
+<button type = 'button' onclick='sendkick()'>send kick</button>
 <!-- game table -->
 <table border="1" style="width:100%">
     <tr>

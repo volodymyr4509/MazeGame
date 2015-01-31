@@ -1,10 +1,14 @@
 package com.game.mazeapp.controller;
 
+import com.game.mazeapp.entity.Fight;
+import com.game.mazeapp.entityJSON.KickParamsJSON;
+import com.game.mazeapp.entityJSON.OpponentNameJSON;
 import com.game.mazeapp.manager.FightManagerImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 
 /**
  * Created by Home on 27.12.2014.
@@ -13,25 +17,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FightController {
 
-    @RequestMapping(value = "/createNewFight", method = RequestMethod.POST)
-    public @ResponseBody String createFight(@RequestParam String nicknames){
-        System.out.println("begin create fight");
-        //split string nicknames by regex " "
-        String [] nicknamesArray = nicknames.split(" ", 10);
+    @RequestMapping(value = "/beginfight", method = RequestMethod.POST)
+    public @ResponseBody Fight createFight(@RequestBody OpponentNameJSON opponentNickname, Principal principal){
         FightManagerImpl fightManager = new FightManagerImpl();
+        String currentUserNickname = principal.getName();
+        System.out.println("begin create fight: opponentNickname: "+ opponentNickname + "currentPlayer: " + currentUserNickname);
         try{
-            fightManager.createFight(nicknamesArray);
-            return "Saved successfully";
+            Fight fight = fightManager.createFight(currentUserNickname, opponentNickname.getMonsterNickname());
+            return fight;
         }catch (Exception e){
-            //add response parameters - 500 or something like this
-            return e.toString();
+            //add response parameters - 500 or something like that
+            e.printStackTrace();
         }
+        return new Fight();
     }
 
     @RequestMapping(value = "/kick", method = RequestMethod.POST)
-    public @ResponseBody String kick(@ModelAttribute(value = "kickInfo")String kickInfo, BindingResult bindingResult){
-        System.out.println("Binding result : " + bindingResult);
-        System.out.println("kick : "+kickInfo);
+    public @ResponseBody String kick(@RequestBody KickParamsJSON kickParams){
+        System.out.println("kickparams : attack - " + kickParams.getAttack() + " block - " + kickParams.getBlock());
     return "hello kick";
     }
 

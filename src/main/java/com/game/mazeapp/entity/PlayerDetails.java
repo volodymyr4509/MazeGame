@@ -25,6 +25,11 @@ public class PlayerDetails {
     @Column
     private int muscle;
 
+    @Column
+    private int win;
+
+    @Column int lose;
+
     public PlayerDetails() {
     }
 
@@ -58,6 +63,22 @@ public class PlayerDetails {
 
     public void setMuscle(int muscle) {
         this.muscle = muscle;
+    }
+
+    public int getWin() {
+        return win;
+    }
+
+    public void setWin(int win) {
+        this.win = win;
+    }
+
+    public int getLose() {
+        return lose;
+    }
+
+    public void setLose(int lose) {
+        this.lose = lose;
     }
 
     @Override

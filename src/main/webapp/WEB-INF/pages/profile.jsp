@@ -19,14 +19,9 @@
 
 <hr>
 <!-- Player info-->
-<c:if test="${not empty specificationsList}">
+<div id="playerinfo">
 
-    <ul>
-        <c:forEach var="listValue" items="${specificationsList}">
-            <li>${listValue}</li>
-        </c:forEach>
-    </ul>
+</div>
 
-</c:if>
 </body>
 </html>

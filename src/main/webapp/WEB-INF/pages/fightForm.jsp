@@ -21,17 +21,17 @@
         <tr>
             <td><input type = "radio" name = "block" value = 0></td>
             <td>Head</td>
+            <td><input type = "radio" name = "attack" value = 0></td>
+        </tr>
+        <tr>
+            <td><input type = "radio" name = "block" value = 1></td>
+            <td>Chest</td>
             <td><input type = "radio" name = "attack" value = 1></td>
         </tr>
         <tr>
             <td><input type = "radio" name = "block" value = 2></td>
-            <td>Chest</td>
-            <td><input type = "radio" name = "attack" value = 3></td>
-        </tr>
-        <tr>
-            <td><input type = "radio" name = "block" value = 4></td>
             <td>Stomach</td>
-            <td><input type = "radio" name = "attack" value = 5></td>
+            <td><input type = "radio" name = "attack" value = 2></td>
         </tr>
     </table>
 </form>
