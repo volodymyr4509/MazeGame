@@ -1,5 +1,6 @@
 package com.game.mazeapp.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;

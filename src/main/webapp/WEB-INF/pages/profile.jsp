@@ -9,37 +9,45 @@
 <html>
 <head>
     <title>Profile</title>
+    <script src="<c:url value="/resources/javascripts/profile.js" />"></script>
 </head>
 <body>
-<div id="userName" align="center">
-    ${pageContext.request.userPrincipal.name} <br>
-</div>
+<div id="userName" align="center">${pageContext.request.userPrincipal.name}</div>
+<hr>
 
     <img src="/resources/avapes.jpg" />
 
 <hr>
 <!-- Player info-->
+<table border="1" id="playerInfo">
+    <tr>
+        <td>
+            <p>PlayerDetails:</p>
+        </td>
+        <td>
+            <p>CurrentPlayerState:</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="playerhealth">Health: </div>
+            <div id="playermuscle">Muscle: </div>
+            <div id="playerwins">Wins: </div>
+            <div id="playerloses">Loses: </div>
+        </td>
+        <td>
+            <div id="currentplayerhealth">Current Health: </div>
+            <div id="currentplayermuscle">Current Muscle: </div>
+            <div id="infight">In Fight: </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
+
 <button type="button" onclick="loadProfileInfo()">show profileinfo</button>
-<script>
-    function loadProfileInfo(){
-        $.ajax({
-            type:"GET",
-            url: "/profile",
-            dataType: 'json',
-            data: $("#userName"),
-            contentType: 'application/json; charset=utf-8',
-            async: true,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-            cache: false,    //This will force requested pages not to be cached by the browser
-            processData:false, //To avoid making query String instead of JSON
-            success: function (playerInfo) {
-                console.log("Player: " + playerInfo);
-            },
-            error: function (e) {
-                console.log('error during loading player: ' + e);
-            }
-        });
-    }
-</script>
 
 </body>
 </html>

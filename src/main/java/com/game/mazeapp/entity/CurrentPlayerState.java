@@ -1,5 +1,7 @@
 package com.game.mazeapp.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -54,6 +56,7 @@ public class CurrentPlayerState {
         this.id = id;
     }
 
+    @JsonIgnore//to avoid stackoverflow error
     public Player getPlayer() {
         return player;
     }
