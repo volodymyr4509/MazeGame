@@ -3,121 +3,96 @@ $( document ).ready(function() {
     var canvas = document.getElementById("mazecanvas");
     var context = canvas.getContext("2d");
     var intervalID;
-    var currentPlayerX = 420;
-    var currentPlayerY = 10;
-    var finishX = 533;
-    var finishY = 114;
     var mazeWidth = 556;
     var mazeHeight = 556;
-    var squareSide = 20;
-    var movingStep = 1;
 
-    var monster = {
-        name:"Rahul",
-        x:423,
-        y:100,
-        movingStep:1,
-        size:20,
-        colour:"#FF0000",
-        draw:draw,
-        move:move,
-        currentDirection:2,
-        backDirection:0,
-        possibleDirections:findPossibleDirections
+
+    function Dummy(x,y,name,speed,colour){
+        this.x = x;
+        this.y = y;
+        this.size = 20;
+        this.name = name;
+        this.speed = speed;
+        this.colour = colour;
+        this.currentDirection = setRandomDirection.call(this);
+
+        this.backDirection = (this.currentDirection + 2)<4?(this.currentDirection + 2):(this.currentDirection - 2);
+        this.draw = function (){
+            context.beginPath();
+            context.rect(this.x, this.y, this.size, this.size);
+            context.closePath();
+            context.fillStyle = this.colour;
+            context.fill();
+        };
+        this.possibleDirections = function(){
+            var possibleDirections = [];
+            //UP
+            if(this.y-this.speed >= 0){
+                var imgDataUp = context.getImageData(this.x, this.y-this.speed, this.size, this.speed);
+                var data = imgDataUp.data;
+                if(analyzePixelsRange(data)){
+                     //console.log("can move UP");
+                    possibleDirections.push(0);
+                }
+            }
+            //RIGHT
+            if(this.x+this.speed <= mazeWidth){
+                var imgDataRight = context.getImageData(this.x+this.size, this.y, this.speed, this.size);
+                var data = imgDataRight.data;
+                if(analyzePixelsRange(data)){
+                    //console.log("can move RIGHT");
+                    possibleDirections.push(1);
+                }
+            }
+            //DOWN
+            if(this.y+this.speed <= mazeHeight){
+                var imgDataRight = context.getImageData(this.x, this.y+this.size, this.size, this.speed);
+                var data = imgDataRight.data;
+                if(analyzePixelsRange(data)){
+                        //console.log("can move DOWN");
+                        possibleDirections.push(2);
+                }
+            }
+            //LEFT
+            if(this.x-this.speed >= 0){
+                var imgDataRight = context.getImageData(this.x - this.speed, this.y, this.speed, this.size);
+                var data = imgDataRight.data;
+                if(analyzePixelsRange(data)){
+                        //console.log("can move LEFT");
+                        possibleDirections.push(3);
+                }
+            }
+            //console.log("Possible directions Monster: " + this.name + " : " + possibleDirections.toString());
+            return possibleDirections;
+        }
+        this.takeStepForward = function(){
+            makeWhite(this.x, this.y, this.size, this.size);
+            console.log("for " + this.name + " current direction = " + this.currentDirection() + " and possibleDirecitons: " + this.possibleDirections());
+            if($.inArray(this.currentDirection, this.possibleDirections())>-1){
+                switch (this.currentDirection){
+                    case 0: this.y--; break;
+                    case 1: this.x++; break;
+                    case 2: this.y++; break;
+                    case 3: this.x--; break;
+                }
+            }
+            this.draw();
+        }
     }
-    function drawMazeAndRectangle() {
+    function setRandomDirection(){
+        if(this.possibleDirections.length > 1){
+            var index = this.possibleDirections.indexOf(this.backDirection);
+            this.possibleDirections.splice(index, 1);
+        }
+        return this.possibleDirections()[Math.floor(Math.random() * this.possibleDirections().length)];
+    };
+    function drawMaze() {
         makeWhite(0, 0, canvas.width, canvas.height);
         var mazeImg = new Image();
         mazeImg.onload = function () {
             context.drawImage(mazeImg, 0, 0);
-            drawPlayer(currentPlayerX, currentPlayerY);
-            drawFinish();
-            addMonster();
         };
         mazeImg.src = "/resources/maze.gif";
-    }
-    function drawPlayer(x, y) {
-        makeWhite(currentPlayerX, currentPlayerY, squareSide, squareSide);
-        currentPlayerX = x;
-        currentPlayerY = y;
-        style = "#0000FF";
-        drawRectangle(x, y, style);
-    }
-    function drawFinish(){
-        style = "#00FF00";
-        drawRectangle(finishX, finishY, style);
-    }
-    function drawRectangle(x, y, style){
-        context.beginPath();
-        context.rect(x, y, squareSide, squareSide);
-        context.closePath();
-        context.fillStyle = style;
-        context.fill();
-    }
-    function movePlayer(e) {
-        var newX;
-        var newY;
-        e = e || window.event;
-        switch (e.keyCode) {
-            case 38:   // arrow up key
-            case 87: // W key
-                newX = currentPlayerX;
-                newY = currentPlayerY - movingStep;
-                break;
-            case 37: // arrow left key
-            case 65: // A key
-                newX = currentPlayerX - movingStep;
-                newY = currentPlayerY;
-                break;
-            case 40: // arrow down key
-            case 83: // S key
-                newX = currentPlayerX;
-                newY = currentPlayerY + movingStep;
-                break;
-            case 39: // arrow right key
-            case 68: // D key
-                newX = currentPlayerX + movingStep;
-                newY = currentPlayerY;
-                break;
-        }
-        if(canMove(newX, newY)){
-            drawPlayer(newX,newY);
-        };
-    }
-    function canMove(destX, destY) {
-        var imgData = context.getImageData(destX, destY, squareSide, squareSide);
-        var data = imgData.data;
-        var blocker = false;
-        if (destX >= 0 && destX <= mazeWidth - squareSide && destY >= 0 && destY <= mazeHeight - squareSide) {
-            for (var i = 0; i < 4 * squareSide * squareSide; i += 4) {
-                if(blocker = checkColour(data[i], data[i+1], data[i+2])){
-                    switch (blocker){
-                        case "wall": console.log("wall detected");
-                            break;
-                        case "monster": console.log("monster detected");
-                            beginFight();
-                            break;
-                        case "finish": console.log("finish detected");
-                            break;
-                        default: console.log("default");
-                    }
-                    break;
-                }
-            }
-        }
-        return !blocker;
-    }
-    function checkColour(r, g, b) {
-        if(r == 255 && g == 0 && b == 0){
-            return "monster";
-        }
-        if(r == 0 && g == 0 && b == 0){
-            return "wall";
-        }
-        if(r == 0 && g == 255 && b == 0){
-            return "finish";
-        }
-        return false;
     }
 
     function makeWhite(x, y, w, h) {
@@ -127,91 +102,29 @@ $( document ).ready(function() {
         context.fillStyle = "white";
         context.fill();
     }
-    function moveUp(){
-        this.y--;
-    }
-    function moveRight(){
-        this.x++;
-    }
-    function moveDown(){
-        this.y++;
-    }
-    function moveLeft(){
-        this.x--;
-    }
-    function move(){
-        this.backDirection = (this.direction + 2)<4?(this.direction + 2):(this.direction - 2);
-        var possibleDirections = findPossibleDirections.call(this);
 
-        var direction = chooseRandomDirection.call(this, possibleDirections);
-        this.direction = direction;
-        makeWhite(this.x, this.y, this.size, this.size);
-        switch (direction){
-            case 0: moveUp.call(this); break;
-            case 1: moveRight.call(this); break;
-            case 2: moveDown.call(this); break;
-            case 3: moveLeft.call(this); break;
+    function setPlayerCurrentDirection(e) {
+        e = e || window.event;
+        switch (e.keyCode) {
+            case 38:   // arrow up key
+            case 87: // W key
+                this.currentDirection = 0;
+                break;
+            case 37: // arrow left key
+            case 65: // A key
+                this.currentDirection = 3;
+                break;
+            case 40: // arrow down key
+            case 83: // S key
+                this.currentDirection = 2;
+                break;
+            case 39: // arrow right key
+            case 68: // D key
+                this.currentDirection = 1;
+                break;
         }
-        this.draw();
     }
-    function draw(){
-        context.beginPath();
-        context.rect(this.x, this.y, this.size, this.size);
-        context.closePath();
-        context.fillStyle = this.colour;
-        context.fill();
-    }
-    function findPossibleDirections(){
-        var possibleDirections = [];
-        //UP
-        if(this.y-this.movingStep >= 0){
-            var imgDataUp = context.getImageData(this.x, this.y-this.movingStep, this.size, this.movingStep);
-            var data = imgDataUp.data;
-            if(analyzePixelsRange(data)){
-//            console.log("can move UP");
-                possibleDirections.push(0);
-            }
-        }
-        //RIGHT
-        if(this.x+this.movingStep <= mazeWidth){
-            var imgDataRight = context.getImageData(this.x+this.size, this.y, this.movingStep, this.size);
-            var data = imgDataRight.data;
-            if(analyzePixelsRange(data)){
-//            console.log("can move RIGHT");
-                possibleDirections.push(1);
-            }
-        }
-        //DOWN
-        if(this.y+this.movingStep <= mazeHeight){
-            var imgDataRight = context.getImageData(this.x, this.y+this.size, this.size, this.movingStep);
-            var data = imgDataRight.data;
-            if(analyzePixelsRange(data)){
-//            console.log("can move DOWN");
-                possibleDirections.push(2);
-            }
-        }
-        //LEFT
-        if(this.x-this.movingStep >= 0){
-            var imgDataRight = context.getImageData(this.x - this.movingStep, this.y, this.movingStep, this.size);
-            var data = imgDataRight.data;
-            if(analyzePixelsRange(data)){
-//            console.log("can move LEFT");
-                possibleDirections.push(3);
-            }
-        }
-//    console.log("Possible directions Monster: " + possibleDirections.toString());
-        return possibleDirections;
-    }
-    function chooseRandomDirection(possibleDirections){
-        if(possibleDirections.length > 1){
-            var index = possibleDirections.indexOf(this.backDirection);
-            possibleDirections.splice(index, 1);
-        }
 
-        var randomDirection = Math.floor(Math.random() * possibleDirections.length);
-
-        return possibleDirections[randomDirection];
-    }
     function analyzePixelsRange(pixels){
         var blocker = false;
         for(var i=0; i<pixels.length; i+=4){
@@ -228,13 +141,6 @@ $( document ).ready(function() {
         return !blocker;
     }
 
-
-    function addMonster() {
-        console.log("Add monster function");
-        intervalID = setInterval(function(){
-            move.call(monster);
-        },30);
-    }
     function createTimer(seconds) {
         setInterval(function () {
             var clock = document.getElementById("clock");
@@ -260,8 +166,6 @@ $( document ).ready(function() {
 
     function beginFight() {
         clearInterval(intervalID); //stop monster
-        makeWhite(monster.x, monster.y, monster.size, monster.size);
-        disablePlayerMoving();
         console.log("begin fight");
         $.event.trigger({
             type: "fight",
@@ -269,14 +173,22 @@ $( document ).ready(function() {
         });
     }
 
-    function allowPlayerMoving() {
-        window.addEventListener("keydown", movePlayer, true);
-    }
-    function disablePlayerMoving() {
-        window.removeEventListener("keydown", movePlayer, true);
-    }
+    window.addEventListener("keydown", function(){
+        setPlayerCurrentDirection.call(hobbit);
+    }, true);
 
-    allowPlayerMoving();
-    drawMazeAndRectangle();
+    drawMaze();
     createTimer(0);
+    var players = [];
+    var hobbit = new Dummy(420,10,"hobbit",1,"#FF0000");
+    var ork = new Dummy(300,200, "ork", 1, "#0000FF");
+
+    players.push(hobbit,ork);
+
+    setInterval(
+        function(){
+            for(var i=0; i<players.length; i++){
+                players[i].takeStepForward();
+            }
+        },100);
 });

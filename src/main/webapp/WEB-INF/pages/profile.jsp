@@ -15,7 +15,7 @@
 <div id="userName" align="center">${pageContext.request.userPrincipal.name}</div>
 <hr>
 
-    <img src="/resources/avapes.jpg" />
+    <img src="/resources/warrior.png" />
 
 <hr>
 <!-- Player info-->
