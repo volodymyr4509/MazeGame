@@ -66,19 +66,15 @@ $( document ).ready(function() {
         }
         this.currentDirection = function (){
             var possibleDirs = this.possibleDirections();
-            console.log("possibleDirs: " + possibleDirs);
+            //console.log("possibleDirs: " + possibleDirs);
             if(possibleDirs.length > 1){
-                var index = possibleDirs.indexOf(this.backDirection());
+                var index = possibleDirs.indexOf(this.backDirection);
                 possibleDirs.splice(index, 1);
             }
-            return possibleDirs[Math.floor(Math.random() * possibleDirs().length)];
+            return possibleDirs[Math.floor(Math.random() * possibleDirs.length)];
         };
-        this.backDirection = function(){
-            var currentDir = this.currentDirection();
-            var backDir = ((currentDir + 2)<4)?(currentDir + 2):(currentDir - 2);
-            console.log("backDir: " + backDir)
-            return backDir;
-        }
+        this.backDirection = (currentDir = this.currentDirection()+ 2<4)?(currentDir + 2):(currentDir - 2);
+
         this.takeStepForward = function(){
             makeWhite(this.x, this.y, this.size, this.size);
             //console.log("for " + this.name + " current direction = "  +this.currentDirection()+ " and possibleDirecitons: " + this.possibleDirections());
@@ -191,16 +187,16 @@ $( document ).ready(function() {
         }
     }
     var ork = new Dummy(300,200, "ork", 1, "#0000FF");
-    var goblin = new Dummy(200,100, "goblin", 1, "#0000FF");
+    //var goblin = new Dummy(200,100, "goblin", 1, "#0000FF");
 
-    players.push(hobbit,ork,goblin);
+    players.push(hobbit,ork);
 
     setInterval(
         function(){
             for(var i=0; i<players.length; i++){
-                console.log("Player name: " + players[i].name + " playerPossibleDirections: " + players[i].possibleDirections() +
-                " currentDirection: " + players[i].currentDirection()+  " backDirection: " +  players[i].backDirection());
+                //console.log("Player name: " + players[i].name + " playerPossibleDirections: " + players[i].possibleDirections() +
+                //" currentDirection: " + players[i].currentDirection()+  " backDirection: " +  players[i].backDirection);
                 players[i].takeStepForward();
             }
-        },500);
+        },100);
 });
