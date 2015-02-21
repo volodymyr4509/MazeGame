@@ -65,14 +65,19 @@ $( document ).ready(function() {
             return possibleDirections;
         }
         this.currentDirection = function (){
-            if(this.possibleDirections.length > 1){
-                var index = this.possibleDirections.indexOf(this.backDirection());
-                this.possibleDirections.splice(index, 1);
+            var possibleDirs = this.possibleDirections();
+            console.log("possibleDirs: " + possibleDirs);
+            if(possibleDirs.length > 1){
+                var index = possibleDirs.indexOf(this.backDirection());
+                possibleDirs.splice(index, 1);
             }
-            return this.possibleDirections()[Math.floor(Math.random() * this.possibleDirections().length)];
+            return possibleDirs[Math.floor(Math.random() * possibleDirs().length)];
         };
         this.backDirection = function(){
-            return ((this.currentDirection() + 2)<4)?(this.currentDirection() + 2):(this.currentDirection() - 2);
+            var currentDir = this.currentDirection();
+            var backDir = ((currentDir + 2)<4)?(currentDir + 2):(currentDir - 2);
+            console.log("backDir: " + backDir)
+            return backDir;
         }
         this.takeStepForward = function(){
             makeWhite(this.x, this.y, this.size, this.size);
