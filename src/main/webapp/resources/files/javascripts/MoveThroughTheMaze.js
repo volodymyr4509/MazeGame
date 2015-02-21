@@ -5,6 +5,7 @@ $( document ).ready(function() {
     var intervalID;
     var mazeWidth = 556;
     var mazeHeight = 556;
+    var lastKeyDown
 
 
     function Dummy(x,y,name,speed,colour){
@@ -14,9 +15,7 @@ $( document ).ready(function() {
         this.name = name;
         this.speed = speed;
         this.colour = colour;
-        this.currentDirection = setRandomDirection.call(this);
 
-        this.backDirection = (this.currentDirection + 2)<4?(this.currentDirection + 2):(this.currentDirection - 2);
         this.draw = function (){
             context.beginPath();
             context.rect(this.x, this.y, this.size, this.size);
@@ -65,11 +64,21 @@ $( document ).ready(function() {
             //console.log("Possible directions Monster: " + this.name + " : " + possibleDirections.toString());
             return possibleDirections;
         }
+        this.currentDirection = function (){
+            if(this.possibleDirections.length > 1){
+                var index = this.possibleDirections.indexOf(this.backDirection());
+                this.possibleDirections.splice(index, 1);
+            }
+            return this.possibleDirections()[Math.floor(Math.random() * this.possibleDirections().length)];
+        };
+        this.backDirection = function(){
+            return ((this.currentDirection() + 2)<4)?(this.currentDirection() + 2):(this.currentDirection() - 2);
+        }
         this.takeStepForward = function(){
             makeWhite(this.x, this.y, this.size, this.size);
-            console.log("for " + this.name + " current direction = " + this.currentDirection() + " and possibleDirecitons: " + this.possibleDirections());
-            if($.inArray(this.currentDirection, this.possibleDirections())>-1){
-                switch (this.currentDirection){
+            //console.log("for " + this.name + " current direction = "  +this.currentDirection()+ " and possibleDirecitons: " + this.possibleDirections());
+            if($.inArray(this.currentDirection(), this.possibleDirections())>-1){
+                switch (this.currentDirection()){
                     case 0: this.y--; break;
                     case 1: this.x++; break;
                     case 2: this.y++; break;
@@ -79,13 +88,8 @@ $( document ).ready(function() {
             this.draw();
         }
     }
-    function setRandomDirection(){
-        if(this.possibleDirections.length > 1){
-            var index = this.possibleDirections.indexOf(this.backDirection);
-            this.possibleDirections.splice(index, 1);
-        }
-        return this.possibleDirections()[Math.floor(Math.random() * this.possibleDirections().length)];
-    };
+
+
     function drawMaze() {
         makeWhite(0, 0, canvas.width, canvas.height);
         var mazeImg = new Image();
@@ -103,27 +107,6 @@ $( document ).ready(function() {
         context.fill();
     }
 
-    function setPlayerCurrentDirection(e) {
-        e = e || window.event;
-        switch (e.keyCode) {
-            case 38:   // arrow up key
-            case 87: // W key
-                this.currentDirection = 0;
-                break;
-            case 37: // arrow left key
-            case 65: // A key
-                this.currentDirection = 3;
-                break;
-            case 40: // arrow down key
-            case 83: // S key
-                this.currentDirection = 2;
-                break;
-            case 39: // arrow right key
-            case 68: // D key
-                this.currentDirection = 1;
-                break;
-        }
-    }
 
     function analyzePixelsRange(pixels){
         var blocker = false;
@@ -174,21 +157,45 @@ $( document ).ready(function() {
     }
 
     window.addEventListener("keydown", function(){
-        setPlayerCurrentDirection.call(hobbit);
+        lastKeyDown = window.event.keyCode;
+        console.log("lastKeyDown: " + lastKeyDown);
     }, true);
 
     drawMaze();
     createTimer(0);
     var players = [];
     var hobbit = new Dummy(420,10,"hobbit",1,"#FF0000");
+    hobbit.currentDirection = function (){
+        switch (lastKeyDown) {
+            case 38:   // arrow up key
+            case 87: // W key
+                return 0;
+                break;
+            case 37: // arrow left key
+            case 65: // A key
+                return 3;
+                break;
+            case 40: // arrow down key
+            case 83: // S key
+                return 2;
+                break;
+            case 39: // arrow right key
+            case 68: // D key
+                return 1;
+                break;
+        }
+    }
     var ork = new Dummy(300,200, "ork", 1, "#0000FF");
+    var goblin = new Dummy(200,100, "goblin", 1, "#0000FF");
 
-    players.push(hobbit,ork);
+    players.push(hobbit,ork,goblin);
 
     setInterval(
         function(){
             for(var i=0; i<players.length; i++){
+                console.log("Player name: " + players[i].name + " playerPossibleDirections: " + players[i].possibleDirections() +
+                " currentDirection: " + players[i].currentDirection()+  " backDirection: " +  players[i].backDirection());
                 players[i].takeStepForward();
             }
-        },100);
+        },500);
 });
