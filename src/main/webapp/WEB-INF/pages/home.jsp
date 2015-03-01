@@ -20,6 +20,10 @@
         <a href="login">Log in</a>
         <a href="maze">Maze</a>
     </div>
+    <hr>
+    <div align="center">
+        MoleMaze. Version 0.1 beta. Refactored all js code.
+    </div>
 
 </body>
 </html>
