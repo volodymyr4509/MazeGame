@@ -12,7 +12,7 @@
     <script src="<c:url value="/resources/javascripts/profile.js" />"></script>
 </head>
 <body>
-<div id="userName" align="center">${pageContext.request.userPrincipal.name}</div>
+<div id="currentPlayerNickName" align="center">${pageContext.request.userPrincipal.name}</div>
 <hr>
 
     <img src="/resources/warrior.png" />

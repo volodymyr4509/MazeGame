@@ -2,7 +2,8 @@
  * Created by Home on 31.01.2015.
  */
 $( document ).ready(function() {
-    var currentPlayerNickname = $("#userName")[0].innerHTML;
+    //TODO: get current player from backend/not from html div;
+    var currentPlayerNickname = $("#currentPlayerNickName").text();
 
     loadProfileInfo(currentPlayerNickname);
 
