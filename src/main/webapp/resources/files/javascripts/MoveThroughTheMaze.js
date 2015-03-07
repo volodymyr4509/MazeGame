@@ -66,6 +66,7 @@ $( document ).ready(function() {
         }
         this.currentDirection = function (){
             var possibleDirs = this.possibleDirections();
+
             //console.log("possibleDirs: " + possibleDirs);
             if(possibleDirs.length > 1){
                 var index = possibleDirs.indexOf(this.backDirection);
