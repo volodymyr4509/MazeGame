@@ -141,48 +141,6 @@ $( document ).ready(function() {
         return !blocker;
     }
 
-    function createTimer(seconds) {
-        setInterval(function () {
-            var clock = document.getElementById("clock");
-            var clockContext = clock.getContext("2d");
-            clockContext.beginPath();
-            clockContext.rect(0, 0, clock.width, clock.height);
-            clockContext.closePath();
-            clockContext.fillStyle = "white";
-            clockContext.fill();
-            clockContext.font = "20px Arial";
-            clockContext.fillStyle = "green";
-            clockContext.textAlign = "center";
-            clockContext.textBaseline = "middle";
-            var minutes = Math.floor(seconds / 60);
-            var secondsToShow = (seconds - minutes * 60).toString();
-            if (secondsToShow.length === 1) {
-                secondsToShow = "0" + secondsToShow; // if the number of seconds is '5' for example, make sure that it is shown as '05'
-            }
-            clockContext.fillText(minutes.toString() + ":" + secondsToShow, clock.width / 2, clock.height / 2, clock.width);
-            seconds++;
-        }, 1000);
-    }
-
-    function prepareFight() {
-        var hero = $.grep(players, function(n,i){
-            return n.name == $("#currentPlayerNickName").text();
-        })[0];
-        //remove players-in-fight from array
-        players.splice(players.indexOf(hero),1);
-        //monster is "in fight" if he is as far as one size from hero
-        var monsterInFight = $.grep(players, function(n,i){
-            return Math.abs(n.x - hero.x) == hero.size || Math.abs(n.y - hero.y) == hero.size;
-        })[0];
-        players.splice(players.indexOf(monsterInFight),1);
-
-        createNewFight(monsterInFight);
-    }
-
-    function createNewFight(monster){
-        postAction("POST", "/beginfight", monster.name);
-    }
-
     function setPlayerCurrentDirection (){
         switch (lastKeyDown) {
             case 38: // arrow up key
@@ -211,6 +169,7 @@ $( document ).ready(function() {
 
     drawMaze();
     createTimer(0);
+    disableForm();
 
     var hero = new Dummy(410,10,$("#currentPlayerNickName").text(),1,"#FF0000");
     hero.setCurrentDirection = setPlayerCurrentDirection;
@@ -226,6 +185,80 @@ $( document ).ready(function() {
             }
         },150);
 
+    ///////////////////////////////////////////////////////////////////////////
+                                 //TIMER//
+    //////////////////////////////////////////////////////////////////////////
+    function createTimer(seconds) {
+        setInterval(function () {
+            var clock = document.getElementById("clock");
+            var clockContext = clock.getContext("2d");
+            clockContext.beginPath();
+            clockContext.rect(0, 0, clock.width, clock.height);
+            clockContext.closePath();
+            clockContext.fillStyle = "white";
+            clockContext.fill();
+            clockContext.font = "20px Arial";
+            clockContext.fillStyle = "green";
+            clockContext.textAlign = "center";
+            clockContext.textBaseline = "middle";
+            var minutes = Math.floor(seconds / 60);
+            var secondsToShow = (seconds - minutes * 60).toString();
+            if (secondsToShow.length === 1) {
+                secondsToShow = "0" + secondsToShow; // if the number of seconds is '5' for example, make sure that it is shown as '05'
+            }
+            clockContext.fillText(minutes.toString() + ":" + secondsToShow, clock.width / 2, clock.height / 2, clock.width);
+            seconds++;
+        }, 1000);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+                                    //PROCESS FIGHT//
+    //////////////////////////////////////////////////////////////////////////
+    function prepareFight() {
+        var hero, monsterInFight;
+        hero = $.grep(players, function(n,i){
+            return n.name == $("#currentPlayerNickName").text();
+        })[0];
+        //remove players-in-fight from array
+        //monster is "in fight" if he is as far as one size from hero
+        if(hero){
+            monsterInFight = $.grep(players, function(n,i){
+                return Math.abs(n.x - hero.x) == hero.size || Math.abs(n.y - hero.y) == hero.size;
+            })[0];
+            players.splice(players.indexOf(hero),1);
+            players.splice(players.indexOf(monsterInFight),1);
+        }
+
+        if(monsterInFight) {
+            console.log("create new fight call. monster: " + monsterInFight.name);
+            postAction("POST", "/savefight", monsterInFight.name);
+            $("#monsterAvatarID").prop("src", "/resources/kazan.svg");
+            enableForm();
+        }
+    }
+
+    $("input:radio").click(function(){
+        var checkedRadios = $("input:radio:checked");
+        var kickParams = {};
+        console.log("you checked radio buttonID: " + checkedRadios);
+        //if the user select two radios - post a kick and uncheck radios.
+        if(checkedRadios.length == 2){
+            kickParams[checkedRadios[0].name] = checkedRadios[0].value;
+            kickParams[checkedRadios[1].name] = checkedRadios[1].value;
+            postAction("POST", "/kick", kickParams);
+            setTimeout(function () {
+                checkedRadios.filter("[name=attack]").removeAttr("checked");
+                checkedRadios.filter("[name=block]").removeAttr("checked");
+            }, 1500);
+        }
+    });
+    function disableForm() {
+        $("#fightOptionID :input").prop("disabled", true);
+    }
+
+    function enableForm() {
+        $("#fightOptionID :input").prop("disabled", false);
+    }
 
     function postAction(type, url, data) {
         $.ajax({
@@ -237,11 +270,11 @@ $( document ).ready(function() {
             async: false,    //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
             cache: false,    //This will force requested pages not to be cached by the browser
             processData:false, //To avoid making query String instead of JSON
-            success: function (response) {
-                console.log("action was completed successfully: " + response);
+            success: function (data, textStatus, jqXHR) {
+                console.log("AJAX SUCCESS: \ndata: " + data + "\ntextStatus: "+ textStatus + "\njqXHR: " + jqXHR);
             },
-            error: function (e) {
-                console.log('error during processing jquery ajax: ' + e);
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX FAIL: \njqXHR: " + jqXHR + "\ntextStatus: "+ textStatus + "\nerrorThrown: " + errorThrown);
             }
         });
     }

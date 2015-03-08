@@ -1,7 +1,7 @@
 package com.game.mazeapp;
 
 import com.game.mazeapp.entity.Player;
-import com.game.mazeapp.manager.PlayerManagerImpl;
+import com.game.mazeapp.manager.impl.PlayerManagerImpl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

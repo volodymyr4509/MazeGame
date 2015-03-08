@@ -35,6 +35,5 @@
         </tr>
     </table>
 </form>
-<script src="<c:url value="/resources/javascripts/fight.js" />"></script>
 </body>
 </html>

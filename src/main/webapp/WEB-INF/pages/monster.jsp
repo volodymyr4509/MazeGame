@@ -24,5 +24,30 @@
     </ul>
 
 </c:if>
+
+<!-- Player info-->
+<table border="1" id="playerInfo">
+    <tr>
+        <td>
+            <p>PlayerDetails:</p>
+        </td>
+        <td>
+            <p>CurrentPlayerState:</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="playerhealth">Health: </div>
+            <div id="playermuscle">Muscle: </div>
+            <div id="playerwins">Wins: </div>
+            <div id="playerloses">Loses: </div>
+        </td>
+        <td>
+            <div id="currentplayerhealth">Current Health: </div>
+            <div id="currentplayermuscle">Current Muscle: </div>
+            <div id="infight">In Fight: </div>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

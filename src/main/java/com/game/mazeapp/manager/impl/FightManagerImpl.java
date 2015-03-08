@@ -1,24 +1,22 @@
-package com.game.mazeapp.manager;
+package com.game.mazeapp.manager.impl;
 
-import com.game.mazeapp.dao.CurrentPlayerStateDaoImpl;
-import com.game.mazeapp.dao.FightDaoImpl;
-import com.game.mazeapp.dao.PlayerDaoImpl;
+import com.game.mazeapp.dao.impl.CurrentPlayerStateDaoImpl;
+import com.game.mazeapp.dao.impl.FightDaoImpl;
+import com.game.mazeapp.dao.impl.PlayerDaoImpl;
 import com.game.mazeapp.entity.CurrentPlayerState;
 import com.game.mazeapp.entity.Fight;
 import com.game.mazeapp.entity.Player;
-import com.game.mazeapp.entity.PlayerDetails;
+import com.game.mazeapp.manager.interfaces.FightManager;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
  * Created by Acer on 1/11/2015.
  */
-public class FightManagerImpl {
+public class FightManagerImpl implements FightManager{
 
     public Fight createFight(String currentPlayerNickname, String opponentNickname) throws Exception{
         PlayerDaoImpl playerDao = new PlayerDaoImpl();

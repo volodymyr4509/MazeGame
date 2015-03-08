@@ -1,10 +1,10 @@
-package com.game.mazeapp.manager;
+package com.game.mazeapp.manager.impl;
 
-import com.game.mazeapp.dao.PlayerDaoImpl;
+import com.game.mazeapp.dao.impl.PlayerDaoImpl;
 import com.game.mazeapp.entity.CurrentPlayerState;
 import com.game.mazeapp.entity.Player;
 import com.game.mazeapp.entity.PlayerDetails;
-import com.sun.javaws.exceptions.InvalidArgumentException;
+import com.game.mazeapp.manager.interfaces.PlayerManager;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Home on 06.12.2014.
  */
-public class PlayerManagerImpl {
+public class PlayerManagerImpl implements PlayerManager{
     PlayerDaoImpl playerDao = new PlayerDaoImpl();
 
     private static final String NICKNAME_PATTERN = "^[a-z0-9_-]{3,15}$";
@@ -51,7 +51,7 @@ public class PlayerManagerImpl {
     }
 
     public Player authenticate(Long playerID, String playerPassword){
-        Player player = playerDao.findPlayerByID(playerID);
+        Player player = playerDao.getByID(playerID);
         if(player == null){
             return null;
         }

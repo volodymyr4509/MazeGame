@@ -15,11 +15,14 @@
               <property name="lose" value="0"/>
        </bean>
 
-       <bean id="batMonsterDetails" class="com.game.mazeapp.entity.PlayerDetails">
+       <bean id="orkMonsterDetails" class="com.game.mazeapp.entity.PlayerDetails">
               <property name="health" value="5" />
               <property name="muscle" value="5" />
        </bean>
-
+       <bean id="goblinMonsterDetails" class="com.game.mazeapp.entity.PlayerDetails">
+              <property name="health" value="10" />
+              <property name="muscle" value="10" />
+       </bean>
        <bean id="currentPlayerState" class="com.game.mazeapp.entity.CurrentPlayerState">
               <property name="inFight" value="false"/>
        </bean>
@@ -28,13 +31,21 @@
               <property name="inFight" value="true"/>
        </bean>
 
-       <bean id="bat" class="com.game.mazeapp.entity.Player">
-              <property name="playerDetails" ref="batMonsterDetails"/>
+       <bean id="ork" class="com.game.mazeapp.entity.Player">
+              <property name="playerDetails" ref="orkMonsterDetails"/>
               <property name="currentPlayerState" ref="currentMonsterState"/>
-              <property name="nickName" value="Bat"/>
+              <property name="nickName" value="ork"/>
               <!--add password/email for monster to calculate hash-->
-              <property name="password" value="batPassword"/>
-              <property name="email" value="batemail@monsteremail.com"/>
+              <property name="password" value="monsterPassword"/>
+              <property name="email" value="monsteremail@monsteremail.com"/>
+       </bean>
+       <bean id="goblin" class="com.game.mazeapp.entity.Player">
+              <property name="playerDetails" ref="goblinMonsterDetails"/>
+              <property name="currentPlayerState" ref="currentMonsterState"/>
+              <property name="nickName" value="goblin"/>
+              <!--add password/email for monster to calculate hash-->
+              <property name="password" value="monsterPassword"/>
+              <property name="email" value="monsteremail@monsteremail.com"/>
        </bean>
 
 

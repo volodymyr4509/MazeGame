@@ -1,11 +1,9 @@
 package com.game.mazeapp.controller;
 
 import com.game.mazeapp.entity.Fight;
-import com.game.mazeapp.entityJSON.KickParamsJSON;
 import com.game.mazeapp.entityJSON.OpponentNameJSON;
-import com.game.mazeapp.manager.FightManagerImpl;
+import com.game.mazeapp.manager.impl.FightManagerImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -17,25 +15,20 @@ import java.security.Principal;
 @Controller
 public class FightController {
 
-    @RequestMapping(value = "/beginfight", method = RequestMethod.POST)
+    @RequestMapping(value = "/savefight", method = RequestMethod.POST)
     public @ResponseBody Fight createFight(@RequestBody OpponentNameJSON opponentNickname, Principal principal){
         FightManagerImpl fightManager = new FightManagerImpl();
         String currentUserNickname = principal.getName();
         System.out.println("begin create fight: opponentNickname: "+ opponentNickname + "currentPlayer: " + currentUserNickname);
         try{
-            Fight fight = fightManager.createFight(currentUserNickname, opponentNickname.getMonsterNickname());
-            return fight;
+            return fightManager.createFight(currentUserNickname, opponentNickname.getMonsterNickname());
         }catch (Exception e){
             //add response parameters - 500 or something like that
             e.printStackTrace();
         }
-        return new Fight();
+        return null;
     }
 
-    @RequestMapping(value = "/kick", method = RequestMethod.POST)
-    public @ResponseBody String kick(@RequestBody KickParamsJSON kickParams){
-        System.out.println("kickparams : attack - " + kickParams.getAttack() + " block - " + kickParams.getBlock());
-    return "hello kick";
-    }
+
 
 }
